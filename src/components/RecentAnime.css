@@ -1,0 +1,512 @@
+/* ========================== Root Colors & Gradients ========================== */
+:root {
+  --primary: #ff6b6b;
+  --secondary: #4ecdc4;
+  --accent: #ffd166;
+  --purple: #9d4edd;
+  --pink: #ff5d8f;
+  --blue: #118ab2;
+  --dark: #1a1a2e;
+  --light: #f8f9fa;
+  --gradient: linear-gradient(135deg, #ff6b6b, #4ecdc4, #9d4edd);
+  --gradient-2: linear-gradient(135deg, #ffd166, #ff5d8f, #118ab2);
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --hover-bg: rgba(255, 255, 255, 0.1);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.15);
+}
+
+/* ========================== Section Styles ========================== */
+.recent-section {
+  padding: 3rem 2rem;
+  background: linear-gradient(
+    -45deg,
+    #ff6b6b10,
+    #4ecdc410,
+    #9d4edd10,
+    #ffd16610
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  min-height: 100vh;
+  width: 98vw;
+  justify-self: center;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+  animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+.section-subtitle {
+  color: #666;
+  font-size: 1.1rem;
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+}
+
+.results-count {
+  color: #888;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+@keyframes titleGlow {
+  from {
+    filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.3));
+  }
+  to {
+    filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.3));
+  }
+}
+
+/* ========================== Grid Layout - Fixed 7 Cards ========================== */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1600px) {
+  .grid-cards {
+    grid-template-columns: repeat(6, 1fr);
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .grid-cards {
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 1000px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .grid-cards {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .recent-section {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ========================== Card Styles ========================== */
+.recent-card {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  animation: cardAppear 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes cardAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.recent-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: var(--shadow-hover);
+}
+
+.recent-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  z-index: 2;
+}
+
+.recent-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Card Image Container */
+.card-image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.recent-card:hover .card-image {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+/* Card Overlay Badges */
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.6) 0%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.recent-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.score-badge,
+.format-badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+.score-badge {
+  background: rgba(255, 209, 102, 0.9);
+  color: var(--dark);
+}
+
+.format-badge {
+  background: rgba(78, 205, 196, 0.9);
+  color: white;
+}
+
+/* Card Info */
+.card-info {
+  padding: 1rem;
+  background: white;
+}
+
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--dark);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.6rem;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.episodes {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.status {
+  background: var(--secondary);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+  font-size: 0.7rem;
+}
+
+.genres {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.genre-tag {
+  background: var(--gradient);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+/* ========================== Load More/Load Less Buttons ========================== */
+.load-buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+
+.load-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  min-width: 160px;
+  justify-content: center;
+}
+
+.load-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.load-btn:hover::before {
+  left: 100%;
+}
+
+.load-more-btn {
+  background: var(--gradient);
+  color: white;
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+}
+
+.load-more-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
+}
+
+.load-less-btn {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.load-less-btn:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.load-more-btn:hover .btn-icon {
+  transform: translateY(2px);
+}
+
+.load-less-btn:hover .btn-icon {
+  transform: translateY(-2px);
+}
+
+/* ========================== Global Hover Tooltip ========================== */
+.global-hover-tooltip {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-hover);
+  z-index: 10000;
+  max-width: 300px;
+  pointer-events: none;
+  animation: tooltipAppear 0.2s ease-out;
+  transform: translate(-50%, -100%);
+}
+
+@keyframes tooltipAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -90%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -100%);
+  }
+}
+
+.global-hover-tooltip h4 {
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.english-title {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.tooltip-details {
+  margin-bottom: 1rem;
+}
+
+.tooltip-details p {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.tooltip-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tooltip-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  pointer-events: all;
+}
+
+.watch-btn {
+  background: var(--primary);
+  color: white;
+}
+
+.details-btn {
+  background: var(--secondary);
+  color: white;
+}
+
+.tooltip-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ========================== Skeleton Loader ========================== */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  border-radius: 0;
+}
+
+.skeleton-text {
+  height: 12px;
+  margin: 0.5rem;
+  border-radius: 6px;
+}
+
+.skeleton-text.short {
+  width: 60%;
+}
+
+.skeleton-text.shorter {
+  width: 40%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ========================== Scrollbar Styling ========================== */
+.grid-cards::-webkit-scrollbar {
+  display: none;
+}
+
+/* ========================== Empty State ========================== */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
