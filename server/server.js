@@ -3,18 +3,26 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-
+// In server.js - update CORS for production
 dotenv.config();
 const app = express();
+app.use(
+  cors({
+    origin: [
+      "https://animeworldata.vercel.app", // Your Vercel frontend
+      "http://localhost:5173", // For local development
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// Add this to handle preflight requests
+app.options("*", cors());
 
 // Middleware
 app.use(express.json());
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
-    credentials: true,
-  })
-);
 
 // MongoDB connection
 const connectDB = async () => {

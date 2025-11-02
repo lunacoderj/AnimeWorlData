@@ -148,6 +148,7 @@ const AuthPage = () => {
   };
 
   // Email/Password Authentication
+  // Email/Password Authentication - FIX THIS FUNCTION
   const handleEmailAuth = async (e) => {
     e.preventDefault();
 
@@ -182,8 +183,9 @@ const AuthPage = () => {
           displayName: displayName,
         });
 
-        // Store in MongoDB
-        await axios.post("http://localhost:5000/api/users", {
+        // ✅ FIXED: Use environment variable for API URL
+        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+        await axios.post(`${API_URL}/api/users`, {
           username,
           firstName,
           lastName,
@@ -205,7 +207,7 @@ const AuthPage = () => {
     }
   };
 
-  // Google Authentication
+  // Google Authentication - FIX THIS FUNCTION TOO
   const handleGoogleAuth = async () => {
     setIsLoading(true);
     setErrors({});
@@ -227,8 +229,9 @@ const AuthPage = () => {
         googleAuth: true,
       };
 
-      // Store in MongoDB
-      await axios.post("http://localhost:5000/api/users", userData);
+      // ✅ FIXED: Use environment variable for API URL
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      await axios.post(`${API_URL}/api/users`, userData);
       console.log("✅ Google auth successful");
       navigate("/welcome");
     } catch (error) {
