@@ -18,8 +18,8 @@ app.use(
   })
 );
 
-// Add this to handle preflight requests
-app.options("*", cors());
+// Add this to handle preflight requests (if needed, but cors() middleware usually handles this)
+// app.options("*", cors()); 
 
 // Middleware
 app.use(express.json());
@@ -28,7 +28,7 @@ app.use(express.json());
 const connectDB = async () => {
   try {
     await mongoose.connect(
-      process.env.MONGO_URI || "mongodb://127.0.0.1:27017/AnimeWorldUsers"
+      process.env.MONGO_URI
     );
     console.log("✅ MongoDB Connected Successfully");
   } catch (error) {

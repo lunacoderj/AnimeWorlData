@@ -177,7 +177,7 @@ const ImageAnalyzer = () => {
     // For demo purposes, we'll use a simulated response
     // Replace with actual API call when you have an API key
 
-    const SAUCENAO_API_KEY = process.env.REACT_APP_SAUCENAO_API_KEY; // Add this to your .env file
+    const SAUCENAO_API_KEY = import.meta.env.VITE_SAUCENAO_API_KEY; // Add this to your .env file
 
     if (!SAUCENAO_API_KEY) {
       // Simulate SauceNAO response for demo

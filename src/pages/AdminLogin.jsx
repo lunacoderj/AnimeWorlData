@@ -17,7 +17,7 @@ const AdminLogin = ({ onAdminLogin }) => {
   // List of admin emails (you can store this in environment variables)
   const ADMIN_EMAILS = ["admin@animeworld.com", "jagadeesh@animeworld.com"];
 
-  const SECRET_KEY = "101523"; // Store in environment variables
+  const SECRET_KEY = import.meta.env.VITE_ADMIN_SECRET_KEY; // Store in environment variables
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

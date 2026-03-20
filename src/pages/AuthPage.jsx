@@ -184,7 +184,7 @@ const AuthPage = () => {
         });
 
         // ✅ FIXED: Use environment variable for API URL
-        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+        const API_URL = import.meta.env.VITE_API_URL;
         await axios.post(`${API_URL}/api/users`, {
           username,
           firstName,
@@ -230,7 +230,7 @@ const AuthPage = () => {
       };
 
       // ✅ FIXED: Use environment variable for API URL
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const API_URL = import.meta.env.VITE_API_URL;
       await axios.post(`${API_URL}/api/users`, userData);
       console.log("✅ Google auth successful");
       navigate("/welcome");
