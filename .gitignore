@@ -36,3 +36,6 @@ Thumbs.db
 
 # Railway / Render
 .railway/
+
+# Reference output
+_reference/
